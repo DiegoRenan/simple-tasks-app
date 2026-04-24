@@ -50,4 +50,58 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
     assert_select "form"
   end
+
+  test "GET edit returns turbo stream with edit form" do
+    get edit_task_path(tasks(:pending_task)), as: :turbo_stream
+    assert_response :success
+    assert_turbo_stream action: "replace", target: dom_id(tasks(:pending_task))
+  end
+
+  test "PATCH update with valid params replaces task row" do
+    patch task_path(tasks(:pending_task)),
+          params: { task: { description: "Updated description" } },
+          as: :turbo_stream
+    assert_response :ok
+    assert_turbo_stream action: "replace", target: dom_id(tasks(:pending_task))
+    assert_equal "Updated description", tasks(:pending_task).reload.description
+  end
+
+  test "PATCH update with blank description returns 422" do
+    patch task_path(tasks(:pending_task)),
+          params: { task: { description: "" } },
+          as: :turbo_stream
+    assert_response :unprocessable_entity
+  end
+
+  test "DELETE destroy removes task from list" do
+    assert_difference "Task.count", -1 do
+      delete task_path(tasks(:pending_task)), as: :turbo_stream
+    end
+    assert_response :ok
+    assert_turbo_stream action: "remove", target: dom_id(tasks(:pending_task))
+  end
+
+  test "PATCH toggle_complete marks pending task as completed" do
+    task = tasks(:pending_task)
+    assert_not task.completed
+    patch toggle_complete_task_path(task), as: :turbo_stream
+    assert_response :ok
+    assert task.reload.completed
+    assert_turbo_stream action: "replace", target: dom_id(task)
+  end
+
+  test "PATCH toggle_complete marks completed task as pending" do
+    task = tasks(:completed_task)
+    assert task.completed
+    patch toggle_complete_task_path(task), as: :turbo_stream
+    assert_response :ok
+    assert_not task.reload.completed
+    assert_turbo_stream action: "replace", target: dom_id(task)
+  end
+
+  test "GET show returns turbo stream with task row" do
+    get task_path(tasks(:pending_task)), as: :turbo_stream
+    assert_response :success
+    assert_turbo_stream action: "replace", target: dom_id(tasks(:pending_task))
+  end
 end

@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  before_action :set_task, only: [ :show, :edit, :update, :destroy, :toggle_complete ]
+
   def index
     @tasks = Task.order(created_at: :desc)
     @task = Task.new
@@ -28,7 +30,55 @@ class TasksController < ApplicationController
     end
   end
 
+  def show
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to root_path }
+    end
+  end
+
+  def edit
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to root_path }
+    end
+  end
+
+  def update
+    if @task.update(task_params)
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to root_path }
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream { render :update, status: :unprocessable_entity }
+        format.html { redirect_to root_path }
+      end
+    end
+  end
+
+  def destroy
+    @task.destroy
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to root_path }
+    end
+  end
+
+  def toggle_complete
+    @task.update!(completed: !@task.completed)
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to root_path }
+    end
+  end
+
   private
+
+  def set_task
+    @task = Task.find(params[:id])
+  end
 
   def task_params
     params.require(:task).permit(:description)
