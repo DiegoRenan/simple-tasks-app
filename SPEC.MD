@@ -12,6 +12,7 @@ The application should provide a fast, responsive, and modern user experience us
 
 The goal is to simulate SPA-like behavior while maintaining Rails simplicity through server-rendered HTML and Turbo-powered interactions.
 
+Read the file @SPEC.MD for general architectural design.
 ---
 
 ## 2. Core Features
