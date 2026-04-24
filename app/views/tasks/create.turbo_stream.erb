@@ -1,0 +1,3 @@
+<%= turbo_stream.prepend "tasks", partial: "task", locals: { task: @new_task } %>
+<%= turbo_stream.remove "empty_tasks_message" %>
+<%= turbo_stream.replace "task_form" %>
