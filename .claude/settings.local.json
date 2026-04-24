@@ -1,8 +1,10 @@
 {
-  "enabledPlugins": {
-    "ruby-lsp@claude-plugins-official": true
-  },
   "permissions": {
+    "allow": [
+      "Bash(bin/rails db:migrate *)",
+      "Bash(bin/rails test *)",
+      "Bash(bundle exec *)"
+    ],
     "deny": [
       "Bash(curl *)",
       "Bash(**/.env)",
@@ -12,5 +14,8 @@
       "Write(**/.env)",
       "Write(**/.env.*)"
     ]
+  },
+  "enabledPlugins": {
+    "ruby-lsp@claude-plugins-official": true
   }
 }

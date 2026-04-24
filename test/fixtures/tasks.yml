@@ -1,0 +1,7 @@
+pending_task:
+  description: "Buy groceries"
+  completed: false
+
+completed_task:
+  description: "Submit technical challenge"
+  completed: true
