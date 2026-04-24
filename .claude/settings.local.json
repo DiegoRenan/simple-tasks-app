@@ -1,0 +1,16 @@
+{
+  "enabledPlugins": {
+    "ruby-lsp@claude-plugins-official": true
+  },
+  "permissions": {
+    "deny": [
+      "Bash(curl *)",
+      "Bash(**/.env)",
+      "Bash(**/.env.*)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Write(**/.env)",
+      "Write(**/.env.*)"
+    ]
+  }
+}
