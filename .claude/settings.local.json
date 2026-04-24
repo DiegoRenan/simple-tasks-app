@@ -3,7 +3,10 @@
     "allow": [
       "Bash(bin/rails db:migrate *)",
       "Bash(bin/rails test *)",
-      "Bash(bundle exec *)"
+      "Bash(bundle exec *)",
+      "Bash(cat)",
+      "Bash(/home/dev/.local/share/mise/installs/ruby/3.4.7/lib/ruby/gems/3.4.0/gems/tailwindcss-ruby-4.2.2-x86_64-linux-gnu/exe/x86_64-linux-gnu/tailwindcss -i /tmp/test-dark5.css --content /tmp/test-dark3.html)",
+      "Bash(bin/rails routes *)"
     ],
     "deny": [
       "Bash(curl *)",
